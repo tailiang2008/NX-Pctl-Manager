@@ -153,7 +153,7 @@ static void pt_print_state(void)
         printf("Today's remaining  : ~%llu min\n",
                (unsigned long long)(g_pt.remaining_ns / 60000000000ULL));
     else
-        printf("Today's remaining  : 0  (often reads 0 when no game is running)\n");
+        printf("Today's remaining  : 0\n");
 
     if (!g_pt.valid) { printf("Configured limit   : (could not read)\n"); return; }
 
