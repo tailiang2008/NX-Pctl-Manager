@@ -1,3 +1,7 @@
+// NX-Pctl-Manager — text-console menu UI (see menu.h).
+// Copyright (C) 2026 Taylor.  This program is free software under the GNU
+// General Public License v3 or later; it comes with NO WARRANTY. See the
+// LICENSE file or <https://www.gnu.org/licenses/gpl-3.0.html> for details.
 #include "menu.h"
 #include <stdio.h>
 

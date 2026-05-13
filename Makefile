@@ -42,6 +42,15 @@ INCLUDES	:=	includes
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
+# build options:
+#   make PROBE=1   also build the read-only "Dump current config" diagnostic
+#                  menu item (left out of normal builds and the release .nro)
+#---------------------------------------------------------------------------------
+ifneq ($(strip $(PROBE)),)
+	DEFINES	+=	-DPCTL_PROBE
+endif
+
+#---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 

@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # so a v* tag push can attach the build to its release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Build inside the official devkitPro image (the same one ./run.sh uses),
+      # so CI matches a local `./run.sh` build. `make dist` produces both
+      # nx_pctl_manager.nro and nx_pctl_manager.zip at the repo root.
+      - name: Build .nro / .zip (devkitpro/devkita64)
+        run: docker run --rm -v "$PWD:/project" -w /project devkitpro/devkita64 make dist
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nx_pctl_manager
+          path: |
+            nx_pctl_manager.nro
+            nx_pctl_manager.zip
+
+      # On a v* tag, attach the freshly built files to that GitHub release.
+      - name: Attach to GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            nx_pctl_manager.nro
+            nx_pctl_manager.zip

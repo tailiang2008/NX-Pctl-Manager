@@ -1,5 +1,9 @@
-// NX-Pctl-Manager — manage the Switch parental controls (reset/delete the PIN,
-// unlink the companion app, view status). Requires CFW (Atmosphere).
+// NX-Pctl-Manager — configure the Switch daily play-time limit offline, plus
+// manage parental controls (set / change / delete the PIN, unlink the companion
+// app, view status). Requires CFW (Atmosphere).
+// Copyright (C) 2026 Taylor.  This program is free software under the GNU
+// General Public License v3 or later; it comes with NO WARRANTY. See the
+// LICENSE file or <https://www.gnu.org/licenses/gpl-3.0.html> for details.
 #include <switch.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -85,11 +89,13 @@ static void act_delete_pairing(void)
 
 // ----- Play timer: set the daily play-time limit (sub-menu of presets) -----
 
+#ifdef PCTL_PROBE
 static void save_report(const char *text)
 {
     FILE *f = fopen("/nx_pctl_probe.txt", "w");
     if (f) { fputs(text, f); fclose(f); }
 }
+#endif
 
 static PtState g_pt;            // cached play-timer state, refreshed on entry and after each action
 static bool    s_pt_did_unlock; // set by pt_ready_to_write() when it had to turn parental controls off
@@ -274,6 +280,7 @@ static void pt_set_all(void)
     pt_apply(v);
 }
 
+#ifdef PCTL_PROBE
 static void pt_diag(void)
 {
     static char rep[6144];
@@ -283,6 +290,7 @@ static void pt_diag(void)
     printf("%s\n(saved to sd:/nx_pctl_probe.txt)\n", rep);
     menu_wait_back();
 }
+#endif
 
 // ---- per-day sub-menu: A on a day STAGES that day's limit; "Save" writes all 7 ----
 // Edits go into g_pt_pending (seeded from the live config on entry); nothing touches the
@@ -383,7 +391,9 @@ static const MenuItem g_pt_items[] = {
     { "Set daily limit (all days)...",              NULL, pt_set_all },
     { "Per-day limits...",                          NULL, pt_per_day },
     { "Remove play-time limit", "Remove the play-time limit (all days)?", pt_off },
+#ifdef PCTL_PROBE
     { "Dump current config -> sd:/nx_pctl_probe.txt", NULL, pt_diag },
+#endif
 };
 
 static void act_play_timer(void)
