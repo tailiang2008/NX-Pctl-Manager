@@ -3,7 +3,6 @@
     "actions": "Actions",
 
     "status": {
-        "safety_level": "Safety level",
         "pin":          "PIN",
         "restrictions": "Restrictions enabled",
         "pc_enabled":   "Parental control enabled"
@@ -32,7 +31,6 @@
         "title": "Play timer",
 
         "state": {
-            "enabled":    "Play timer enabled",
             "restricted": "Limit reached today",
             "remaining":  "Today's remaining",
             "configured": "Configured limit"
@@ -74,7 +72,6 @@
     },
 
     "toast": {
-        "todo":             "(action not wired yet)",
         "status_refreshed": "Status refreshed.",
         "delete_pc_ok":     "Parental controls deleted.",
         "delete_pc_err":    "Could not delete parental controls",
