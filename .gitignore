@@ -54,7 +54,10 @@ dkms.conf
 # Editor / tool local config
 .vscode/
 .claude/
+
+# Local project notes (not for the public repo)
 CLAUDE.md
+PROGRESS.md
 
 # Project ignores
 /build
