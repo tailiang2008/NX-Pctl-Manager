@@ -6,7 +6,7 @@
         "safety_level": "Safety level",
         "pin":          "PIN",
         "restrictions": "Restrictions enabled",
-        "play_timer":   "Play timer"
+        "pc_enabled":   "Parental control enabled"
     },
 
     "items": {

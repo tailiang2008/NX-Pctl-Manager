@@ -22,10 +22,12 @@ std::string fmt_pin(const PctlStatus& s)
     return buf;
 }
 
+// Reads as "Parental control enabled : <value>" — the value carries the
+// configured-limit detail when the timer is on.
 std::string fmt_play_timer(const PtState& pt)
 {
     if (!pt.valid)    return UNAVAILABLE;
-    if (!pt.enabled)  return "disabled";
+    if (!pt.enabled)  return "no";
 
     bool any = false, uniform = true;
     for (int i = 0; i < 7; i++) {
@@ -33,14 +35,14 @@ std::string fmt_play_timer(const PtState& pt)
         if (pt.day_min[i] != pt.day_min[0])   uniform = false;
     }
 
-    if (!any)                                    return "enabled";
-    if (uniform && pt.day_min[0] == 0)           return "enabled (every day blocked)";
+    if (!any)                                    return "yes";
+    if (uniform && pt.day_min[0] == 0)           return "yes — every day blocked";
     if (uniform) {
         char buf[32];
-        std::snprintf(buf, sizeof(buf), "enabled (%u min/day)", (unsigned)pt.day_min[0]);
+        std::snprintf(buf, sizeof(buf), "yes — %u min/day", (unsigned)pt.day_min[0]);
         return buf;
     }
-    return "enabled (per-day limits)";
+    return "yes — per-day limits";
 }
 }   // namespace
 

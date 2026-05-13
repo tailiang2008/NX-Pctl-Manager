@@ -24,7 +24,7 @@
     </brls:Box>
 
     <brls:Box axis="row" alignItems="center" marginBottom="6">
-        <brls:Label text="@i18n/nx_pctl/status/play_timer" grow="1.0"/>
+        <brls:Label text="@i18n/nx_pctl/status/pc_enabled" grow="1.0"/>
         <brls:Label id="play_timer_value" text="—"/>
     </brls:Box>
 
