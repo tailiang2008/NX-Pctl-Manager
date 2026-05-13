@@ -53,15 +53,27 @@ if (PCTL_PROBE)
 endif ()
 
 # .nro packaging — mirrors extern/borealis/CMakeLists.txt's Switch branch
-# (nacptool → copy resources → strip font/ → elf2nro).
+# (nacptool → assemble RomFS → elf2nro).
+#
+# RomFS layout: borealis's built-in resources (hints.json for `"hints/cancel"_i18n`
+# lookups, MaterialIcons-Regular.ttf for built-in widget glyphs, sys icons …)
+# go in first, then our app resources overlay on top. We strip:
+#   - resources/font/        — we use the system shared font instead (~3 MB saved)
+#   - resources/img/pokemon/ — demo-only (~1.6 MB saved)
+#   - resources/xml/         — demo-only (built-in widgets use inlined XML strings)
 if (PLATFORM_SWITCH)
+    set(BOREALIS_RESOURCES ${BOREALIS_LIBRARY}/../resources)
     add_custom_target(${PROJECT_NAME}.nro ALL DEPENDS ${PROJECT_NAME}
         COMMAND ${NX_NACPTOOL_EXE} --create "NX Pctl Manager" "${PROJECT_AUTHOR}"
                 "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_ALTER}"
                 ${PROJECT_NAME}.nacp --titleid=${PROJECT_TITLEID}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_RESOURCES} ${CMAKE_BINARY_DIR}/resources
-        # Drop bundled font — use the system shared font instead (saves ~3 MB).
+        # Borealis built-ins first …
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${BOREALIS_RESOURCES} ${CMAKE_BINARY_DIR}/resources
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/resources/font
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/resources/xml
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/resources/img/pokemon
+        # … then our app resources overlay (overrides anything we both define).
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_RESOURCES} ${CMAKE_BINARY_DIR}/resources
         COMMAND ${NX_ELF2NRO_EXE} ${PROJECT_NAME}.elf ${PROJECT_NAME}.nro
                 --icon=${PROJECT_ICON} --nacp=${PROJECT_NAME}.nacp
                 --romfsdir=${CMAKE_BINARY_DIR}/resources

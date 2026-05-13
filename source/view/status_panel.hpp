@@ -18,7 +18,6 @@ class StatusPanel : public brls::Box
     static brls::View* create();
 
   private:
-    BRLS_BIND(brls::Label, safety_value,       "safety_value");
     BRLS_BIND(brls::Label, pin_value,          "pin_value");
     BRLS_BIND(brls::Label, restrictions_value, "restrictions_value");
     BRLS_BIND(brls::Label, play_timer_value,   "play_timer_value");

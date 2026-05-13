@@ -14,11 +14,6 @@
     marginBottom="24">
 
     <brls:Box axis="row" alignItems="center" marginBottom="6">
-        <brls:Label text="@i18n/nx_pctl/status/safety_level" grow="1.0"/>
-        <brls:Label id="safety_value" text="—"/>
-    </brls:Box>
-
-    <brls:Box axis="row" alignItems="center" marginBottom="6">
         <brls:Label text="@i18n/nx_pctl/status/pin" grow="1.0"/>
         <brls:Label id="pin_value" text="—"/>
     </brls:Box>

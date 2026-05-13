@@ -52,7 +52,6 @@ StatusPanel::StatusPanel()
 void StatusPanel::refresh()
 {
     if (!app::pctl_available()) {
-        this->safety_value->setText(UNAVAILABLE);
         this->pin_value->setText(UNAVAILABLE);
         this->restrictions_value->setText(UNAVAILABLE);
         this->play_timer_value->setText(UNAVAILABLE);
@@ -61,8 +60,6 @@ void StatusPanel::refresh()
 
     PctlStatus s;
     pctl_status_fetch(&s);
-    this->safety_value->setText(
-        s.safety_level_ok ? pctl_safety_level_name(s.safety_level) : UNAVAILABLE);
     this->pin_value->setText(fmt_pin(s));
     this->restrictions_value->setText(
         s.restriction_enabled_ok
