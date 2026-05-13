@@ -35,16 +35,34 @@ Notes: `0` minutes means that day is **fully blocked** (not "no limit"); for "no
 
 ## How to use
 
-After launching from hbmenu: ↑ / ↓ move the cursor, (A) confirms, (B) goes back one level / (on the main menu) exits. Destructive actions (delete all parental controls, unlink companion app, remove the limit) and "turn parental controls off temporarily" all show a confirmation screen first.
+Controls: ↑ / ↓ move the cursor, (A) confirms, (B) goes back one level / (on the main menu) exits. Destructive actions (delete all parental controls, unlink companion app, remove the limit) and "turn parental controls off temporarily" all show a confirmation screen first.
 
-1. **(Recommended first step) Unlink the companion app** — main menu → *Unlink companion app*. If the phone parental-controls app is still linked to this console, its next sync will overwrite the limit you set on the console.
-2. **Set the play timer** — main menu → *Play timer (daily limit)*:
-   - *Set daily limit (all days)*: pops a number pad for the minutes (0–1440), applies it to every day, writes it after you confirm.
-   - *Per-day limits*: opens a sub-menu; press (A) on a day to type its value (it's **staged** — edited days are marked `(*)`); when you're done, pick *Save per-day limits* to write all 7 at once; press (B) to leave without saving.
-   - *Remove play-time limit*: turns the whole timer off (with confirmation).
-   - When writing, if the timer is active you'll first get a confirmation → (once you agree) parental controls are turned off temporarily → the new value is written → you're told to return to the main menu (the new limit takes effect once parental controls are active again). ⚠️ **Don't set the limit below "time already played today"** — the moment parental controls come back on, it locks immediately.
-3. **Change / delete the PIN** — *Set / change parental control PIN* switches to the system applet to set a passcode and returns automatically when done; *Delete all parental controls* wipes the PIN and every restriction (with confirmation, **irreversible**).
-4. **View / refresh status** — the main menu always shows a status panel; *Refresh status* re-reads it.
+### Pick the flow that matches your console
+
+**A. Parental controls haven't been set up on this console yet.** No companion-app pairing exists.
+
+1. On the Switch: *System Settings* → *Parental Controls* → set a PIN. (Don't bother with the companion-app pairing — that's the whole point of this homebrew: you skip it.)
+2. Launch this app from hbmenu and continue at *Set the play timer* below.
+
+**B. Parental controls were already set up via the Nintendo Switch Parental Controls phone app.** The phone app is currently paired with this console.
+
+1. Launch this app from hbmenu, pick *Unlink companion app* — otherwise the phone app's next sync will overwrite whatever limit you set here.
+2. Continue at *Set the play timer* below.
+
+### Set the play timer
+
+Main menu → *Play timer (daily limit)*:
+
+- *Set daily limit (all days)*: pops a number pad for the minutes (0–1440), applies it to every day, writes it after you confirm.
+- *Per-day limits*: opens a sub-menu; press (A) on a day to type its value (it's **staged** — edited days are marked `(*)`); when you're done, pick *Save per-day limits* to write all 7 at once; press (B) to leave without saving.
+- *Remove play-time limit*: turns the whole timer off (with confirmation).
+- When writing, if the timer is active you'll first get a confirmation → (once you agree) parental controls are turned off temporarily → the new value is written → you're told to return to the main menu (the new limit takes effect once parental controls are active again). ⚠️ **Don't set the limit below "time already played today"** — the moment parental controls come back on, it locks immediately.
+
+### Other actions
+
+- *Set / change parental control PIN* switches to the system applet to set a passcode and returns automatically when done.
+- *Delete all parental controls* wipes the PIN and every restriction (with confirmation, **irreversible**). Also your recovery option when you've forgotten the PIN.
+- The main menu always shows a status panel; *Refresh status* re-reads it.
 
 ## Install
 
