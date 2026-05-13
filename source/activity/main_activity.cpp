@@ -75,9 +75,19 @@ void MainActivity::onContentAvailable()
         return true;
     });
 
-    // Set / change PIN — wired in step (f).
-    this->item_set_pin->registerClickAction([](brls::View*) {
-        brls::Application::notify("nx_pctl/toast/todo"_i18n);
+    // Set / change PIN — step (f). pctl_set_pin() pops the pctlauth applet
+    // (it's already wrapped in pctlExit/pctlauthRegisterPasscode/pctlInitialize
+    // inside pctl_ops.c — that bracket is required on some firmware versions).
+    // Synchronous: blocks until the applet returns.
+    this->item_set_pin->registerClickAction([this](brls::View*) {
+        Result rc = pctl_set_pin();
+        this->status_panel->refresh();
+        if (R_SUCCEEDED(rc))
+            brls::Application::notify("nx_pctl/toast/set_pin_ok"_i18n);
+        else
+            brls::Application::notify(fmt::format(
+                "{} (error 0x{:08X}).",
+                "nx_pctl/toast/set_pin_err"_i18n, (unsigned)rc));
         return true;
     });
 

@@ -7,6 +7,7 @@
 #include <cstdlib>
 
 #include "app.hpp"
+#include "activity/init_error_activity.hpp"
 #include "activity/main_activity.hpp"
 #include "view/pt_state_header.hpp"
 #include "view/status_panel.hpp"
@@ -34,16 +35,16 @@ int main(int argc, char* argv[])
     brls::Application::registerXMLView("StatusPanel",   StatusPanel::create);
     brls::Application::registerXMLView("PtStateHeader", PtStateHeader::create);
 
-    // Open the pctl service. On a non-CFW console this returns an error; we
-    // still push MainActivity, but the status panel will read "(unavailable)"
-    // everywhere and any wired action will surface the error (step (f) adds a
-    // dedicated InitErrorActivity for a cleaner first-launch experience).
-    if (!app::init()) {
-        brls::Logger::error("pctl_ops_init failed (0x{:08X}) — running in "
-                            "degraded mode (no CFW?)", app::pctl_init_result());
+    // Open the pctl service. On a non-CFW console this returns an error and
+    // we show a dedicated InitErrorActivity (the only thing the user can do
+    // is press B to exit).
+    if (app::init()) {
+        brls::Application::pushActivity(new MainActivity());
+    } else {
+        brls::Logger::error("pctl_ops_init failed (0x{:08X}) — pushing InitErrorActivity",
+                            app::pctl_init_result());
+        brls::Application::pushActivity(new InitErrorActivity());
     }
-
-    brls::Application::pushActivity(new MainActivity());
 
     while (brls::Application::mainLoop())
         ;

@@ -66,12 +66,20 @@
         }
     },
 
+    "init_error": {
+        "title":    "NX Pctl Manager",
+        "headline": "Could not open the parental-control service.",
+        "body":     "This homebrew only works on a console running CFW (Atmosphère); a stock retail console can't open the pctl service."
+    },
+
     "toast": {
         "todo":             "(action not wired yet)",
         "status_refreshed": "Status refreshed.",
         "delete_pc_ok":     "Parental controls deleted.",
         "delete_pc_err":    "Could not delete parental controls",
         "unlink_ok":        "Companion app unlinked.",
-        "unlink_err":       "Could not unlink the companion app"
+        "unlink_err":       "Could not unlink the companion app",
+        "set_pin_ok":       "Parental control PIN updated.",
+        "set_pin_err":      "Could not update the PIN"
     }
 }

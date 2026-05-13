@@ -31,8 +31,9 @@ find_package(Threads REQUIRED)
 list(APPEND APP_PLATFORM_LIB ${CMAKE_THREAD_LIBS_INIT})
 
 # Our sources — both C++ (UI / glue) and C (pctl_ops.c service layer, unchanged
-# from the v2.0.0 text-console build).
-file(GLOB_RECURSE NX_PCTL_SRC source/*.cpp source/*.c)
+# from the v2.0.0 text-console build). CONFIGURE_DEPENDS makes CMake re-glob on
+# every build so newly added source files don't need an explicit reconfigure.
+file(GLOB_RECURSE NX_PCTL_SRC CONFIGURE_DEPENDS source/*.cpp source/*.c)
 
 if (PLATFORM_SWITCH)
     # libnx applet/main wrapper from borealis (handles HOME / nvServices / etc.).
