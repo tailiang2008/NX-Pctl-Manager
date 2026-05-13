@@ -79,15 +79,25 @@ void MainActivity::onContentAvailable()
     // (it's already wrapped in pctlExit/pctlauthRegisterPasscode/pctlInitialize
     // inside pctl_ops.c — that bracket is required on some firmware versions).
     // Synchronous: blocks until the applet returns.
+    //
+    // The notify() is deferred to the next mainLoop tick via brls::sync —
+    // calling it immediately on applet return raced with the focus-state
+    // event and the toast was getting silently dropped (observed on fw 22.1.0).
     this->item_set_pin->registerClickAction([this](brls::View*) {
         Result rc = pctl_set_pin();
+        brls::Logger::info("pctl_set_pin returned 0x{:08X}", (unsigned)rc);
         this->status_panel->refresh();
-        if (R_SUCCEEDED(rc))
-            brls::Application::notify("nx_pctl/toast/set_pin_ok"_i18n);
-        else
-            brls::Application::notify(fmt::format(
-                "{} (error 0x{:08X}).",
-                "nx_pctl/toast/set_pin_err"_i18n, (unsigned)rc));
+        if (R_SUCCEEDED(rc)) {
+            brls::sync([]() {
+                brls::Application::notify("nx_pctl/toast/set_pin_ok"_i18n);
+            });
+        } else {
+            brls::sync([rc]() {
+                brls::Application::notify(fmt::format(
+                    "{} (error 0x{:08X}).",
+                    "nx_pctl/toast/set_pin_err"_i18n, (unsigned)rc));
+            });
+        }
         return true;
     });
 
