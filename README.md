@@ -85,3 +85,7 @@ Without a native toolchain, the repo's `./run.sh` builds via the official Docker
 ## License
 
 GPLv3 (see [`LICENSE`](LICENSE)).
+
+### Third-party
+
+The graphical UI (v3.0.0+) is built on **[borealis](https://github.com/xfangfang/borealis)** — a Horizon-system-style UI library for Switch homebrew — under the Apache License 2.0. The pinned commit lives at `extern/borealis/`; see its `LICENSE` and `NOTICE`. The text-console v2 line did not depend on borealis.

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    PtStateHeader — the multi-line play-timer state block shown at the top of
+    both PlayTimerActivity and PlayTimerPerDayActivity. Mirrors the text-console
+    pt_print_state() output.
+-->
+
+<brls:Box
+    width="auto"
+    height="auto"
+    axis="column"
+    alignItems="stretch"
+    marginBottom="20">
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/status/pc_enabled" grow="1.0"/>
+        <brls:Label id="pt_enabled_value" text="—"/>
+    </brls:Box>
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/play_timer/state/restricted" grow="1.0"/>
+        <brls:Label id="pt_restricted_value" text="—"/>
+    </brls:Box>
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/play_timer/state/remaining" grow="1.0"/>
+        <brls:Label id="pt_remaining_value" text="—"/>
+    </brls:Box>
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/play_timer/state/configured" grow="1.0"/>
+        <brls:Label id="pt_configured_value" text="—"/>
+    </brls:Box>
+
+</brls:Box>

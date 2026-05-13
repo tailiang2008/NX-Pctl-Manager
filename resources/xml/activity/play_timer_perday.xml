@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Per-day play-time limits — entered from PlayTimerActivity. State header on
+    top; 7 day cells stage edits (right-side text shows "(*)" when pending
+    differs from live); the 8th cell writes all 7 at once via cmd 195101.
+    B = pop without saving.
+-->
+
+<brls:AppletFrame
+    title="@i18n/nx_pctl/play_timer/perday/title"
+    iconInterpolation="linear">
+
+    <brls:ScrollingFrame
+        width="auto"
+        height="auto"
+        axis="column"
+        alignItems="stretch"
+        scrollingBehavior="centered"
+        grow="1.0">
+
+        <brls:Box
+            width="auto"
+            height="auto"
+            axis="column"
+            alignItems="stretch"
+            paddingTop="@style/brls/sidebar/padding_top"
+            paddingRight="@style/brls/sidebar/padding_right"
+            paddingBottom="@style/brls/sidebar/padding_bottom"
+            paddingLeft="@style/brls/sidebar/padding_left">
+
+            <PtStateHeader id="pt_state_header"/>
+
+            <brls:Header title="@i18n/nx_pctl/play_timer/perday/section_days" marginBottom="8"/>
+
+            <brls:DetailCell id="pt_d0" title="Sunday"/>
+            <brls:DetailCell id="pt_d1" title="Monday"/>
+            <brls:DetailCell id="pt_d2" title="Tuesday"/>
+            <brls:DetailCell id="pt_d3" title="Wednesday"/>
+            <brls:DetailCell id="pt_d4" title="Thursday"/>
+            <brls:DetailCell id="pt_d5" title="Friday"/>
+            <brls:DetailCell id="pt_d6" title="Saturday"/>
+
+            <brls:Header title="@i18n/nx_pctl/play_timer/perday/section_save" marginTop="16" marginBottom="8"/>
+
+            <brls:DetailCell id="pt_save"
+                             title="@i18n/nx_pctl/play_timer/perday/save"/>
+
+        </brls:Box>
+
+    </brls:ScrollingFrame>
+
+</brls:AppletFrame>

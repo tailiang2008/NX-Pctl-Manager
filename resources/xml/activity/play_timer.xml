@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Play timer sub-menu — entered when the user picks "Play timer (daily limit)"
+    from the main menu. 4-row state header above 3 actions (4 when PROBE=1).
+-->
+
+<brls:AppletFrame
+    title="@i18n/nx_pctl/play_timer/title"
+    iconInterpolation="linear">
+
+    <brls:ScrollingFrame
+        width="auto"
+        height="auto"
+        axis="column"
+        alignItems="stretch"
+        scrollingBehavior="centered"
+        grow="1.0">
+
+        <brls:Box
+            width="auto"
+            height="auto"
+            axis="column"
+            alignItems="stretch"
+            paddingTop="@style/brls/sidebar/padding_top"
+            paddingRight="@style/brls/sidebar/padding_right"
+            paddingBottom="@style/brls/sidebar/padding_bottom"
+            paddingLeft="@style/brls/sidebar/padding_left">
+
+            <PtStateHeader id="pt_state_header"/>
+
+            <brls:Header title="@i18n/nx_pctl/actions" marginBottom="8"/>
+
+            <brls:DetailCell id="pt_set_all"
+                             title="@i18n/nx_pctl/play_timer/items/set_all"/>
+            <brls:DetailCell id="pt_per_day"
+                             title="@i18n/nx_pctl/play_timer/items/per_day"/>
+            <brls:DetailCell id="pt_remove"
+                             title="@i18n/nx_pctl/play_timer/items/remove"/>
+            <!-- PROBE-only diagnostic dump. Hidden by default; PlayTimerActivity
+                 makes it visible + wires the click under #ifdef PCTL_PROBE. -->
+            <brls:DetailCell id="pt_diag"
+                             title="@i18n/nx_pctl/play_timer/items/diag"
+                             visibility="gone"/>
+
+        </brls:Box>
+
+    </brls:ScrollingFrame>
+
+</brls:AppletFrame>

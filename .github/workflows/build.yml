@@ -15,10 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # borealis lives in extern/borealis as a submodule — must be checked
+          # out for the build to compile (without this CI would fail at cmake
+          # with "extern/borealis/library/cmake/toolchain.cmake not found").
+          submodules: recursive
 
       # Build inside the official devkitPro image (the same one ./run.sh uses),
-      # so CI matches a local `./run.sh` build. `make dist` produces both
-      # nx_pctl_manager.nro and nx_pctl_manager.zip at the repo root.
+      # so CI matches a local `./run.sh` build. `make dist` is now a thin shim
+      # over CMake and produces both nx_pctl_manager.nro and nx_pctl_manager.zip
+      # at the repo root. The devkitpro/devkita64 image already ships every
+      # portlib borealis needs (mesa / glfw / glm / freetype / tinyxml2 / etc.)
+      # — no `dkp-pacman -S` step required.
       - name: Build .nro / .zip (devkitpro/devkita64)
         run: docker run --rm -v "$PWD:/project" -w /project devkitpro/devkita64 make dist
 

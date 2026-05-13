@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Shown as the root Activity when pctl_ops_init fails (most often: trying to
+    run this homebrew on a stock retail console, which can't open the pctl
+    service). B-press exits the app (hint registered in onContentAvailable).
+-->
+
+<brls:AppletFrame
+    title="@i18n/nx_pctl/init_error/title"
+    iconInterpolation="linear">
+
+    <brls:Box
+        width="auto"
+        height="auto"
+        axis="column"
+        justifyContent="center"
+        alignItems="center"
+        grow="1.0"
+        paddingLeft="60"
+        paddingRight="60">
+
+        <brls:Label
+            text="@i18n/nx_pctl/init_error/headline"
+            fontSize="28"
+            horizontalAlign="center"
+            marginBottom="20"/>
+
+        <brls:Label
+            id="error_code"
+            text="—"
+            fontSize="20"
+            horizontalAlign="center"
+            marginBottom="32"
+            textColor="@theme/brls/text_disabled"/>
+
+        <brls:Label
+            text="@i18n/nx_pctl/init_error/body"
+            horizontalAlign="center"
+            multiline="true"/>
+
+    </brls:Box>
+
+</brls:AppletFrame>

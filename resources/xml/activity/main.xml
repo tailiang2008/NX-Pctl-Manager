@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Main menu: 4-line StatusPanel above an "Actions" section with the 5 cells
+    that replace the old text-console menu items. Wired in MainActivity.cpp.
+-->
+
+<brls:AppletFrame
+    title="@i18n/nx_pctl/title"
+    iconInterpolation="linear">
+
+    <brls:ScrollingFrame
+        width="auto"
+        height="auto"
+        axis="column"
+        alignItems="stretch"
+        scrollingBehavior="centered"
+        grow="1.0">
+
+        <brls:Box
+            width="auto"
+            height="auto"
+            axis="column"
+            alignItems="stretch"
+            paddingTop="@style/brls/sidebar/padding_top"
+            paddingRight="@style/brls/sidebar/padding_right"
+            paddingBottom="@style/brls/sidebar/padding_bottom"
+            paddingLeft="@style/brls/sidebar/padding_left">
+
+            <StatusPanel id="status_panel"/>
+
+            <brls:Header
+                title="@i18n/nx_pctl/actions"
+                marginBottom="8"/>
+
+            <brls:DetailCell id="item_refresh"    title="@i18n/nx_pctl/items/refresh"/>
+            <brls:DetailCell id="item_play_timer" title="@i18n/nx_pctl/items/play_timer"/>
+            <brls:DetailCell id="item_set_pin"    title="@i18n/nx_pctl/items/set_pin"/>
+            <brls:DetailCell id="item_delete_pc"  title="@i18n/nx_pctl/items/delete_pc"/>
+            <brls:DetailCell id="item_unlink"     title="@i18n/nx_pctl/items/unlink"/>
+
+        </brls:Box>
+
+    </brls:ScrollingFrame>
+
+</brls:AppletFrame>

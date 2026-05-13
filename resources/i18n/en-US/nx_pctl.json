@@ -1,0 +1,84 @@
+{
+    "title":   "Pctl Manager",
+    "actions": "Actions",
+
+    "status": {
+        "pin":          "PIN",
+        "restrictions": "Restrictions enabled",
+        "pc_enabled":   "Parental control enabled"
+    },
+
+    "items": {
+        "refresh":    "Refresh status",
+        "play_timer": "Play timer (daily limit)",
+        "set_pin":    "Set / change parental control PIN",
+        "delete_pc":  "Delete all parental controls",
+        "unlink":     "Unlink companion app"
+    },
+
+    "dialog": {
+        "delete_pc": {
+            "body":    "Delete all parental controls?\n\nThis wipes the PIN and every restriction, and cannot be undone.",
+            "confirm": "Delete"
+        },
+        "unlink": {
+            "body":    "Unlink the companion app (Nintendo Switch Parental Controls) from this console?",
+            "confirm": "Unlink"
+        }
+    },
+
+    "play_timer": {
+        "title": "Play timer",
+
+        "state": {
+            "restricted": "Limit reached today",
+            "remaining":  "Today's remaining",
+            "configured": "Configured limit"
+        },
+
+        "items": {
+            "set_all":  "Set daily limit (all days)…",
+            "per_day":  "Per-day limits…",
+            "remove":   "Remove play-time limit",
+            "diag":     "Dump current config → sd:/nx_pctl_probe.txt"
+        },
+
+        "dialog": {
+            "remove": {
+                "body":    "Remove the play-time limit (all days)?",
+                "confirm": "Remove"
+            }
+        },
+
+        "gate": {
+            "body":    "The play timer is currently active.\n\nWriting a new limit needs parental controls to be temporarily turned off first.\n\nTurn parental controls off temporarily and write now?",
+            "confirm": "Turn off & write"
+        },
+
+        "did_unlock_notice": "Parental controls are temporarily off.\n\nReturn to the main menu; the new limit takes effect once parental controls are active again.",
+
+        "perday": {
+            "title":         "Per-day play-time limits",
+            "section_days":  "Per-day limits (A to edit; (*) marks staged changes)",
+            "section_save":  "Save",
+            "save":          "Save per-day limits"
+        }
+    },
+
+    "init_error": {
+        "title":    "Pctl Manager",
+        "headline": "Could not open the parental-control service.",
+        "body":     "This homebrew only works on a console running CFW (Atmosphère); a stock retail console can't open the pctl service."
+    },
+
+    "toast": {
+        "status_refreshed": "Status refreshed.",
+        "delete_pc_ok":     "Parental controls deleted.",
+        "delete_pc_err":    "Could not delete parental controls",
+        "unlink_ok":        "Companion app unlinked.",
+        "unlink_err":       "Could not unlink the companion app",
+        "set_pin_ok":       "Parental control PIN updated.",
+        "set_pin_err":      "Could not update the PIN",
+        "diag_saved":       "Dump saved to sd:/nx_pctl_probe.txt"
+    }
+}
