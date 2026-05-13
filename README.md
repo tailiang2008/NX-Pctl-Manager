@@ -42,7 +42,7 @@ After launching from hbmenu: ↑ / ↓ move the cursor, (A) confirms, (B) goes b
 
 ## Install
 
-Download `nx_pctl_manager.nro` from the release, drop it in `/switch/` on the SD card, and run it from hbmenu.
+Grab `nx_pctl_manager.nro` from the [**Releases**](../../releases) page, drop it in `/switch/` on the SD card, and run it from hbmenu. (Or download `nx_pctl_manager.zip` from the same release and unzip it onto the SD card root — it puts the `.nro` in `/switch/` for you.)
 
 ## Build from source
 
