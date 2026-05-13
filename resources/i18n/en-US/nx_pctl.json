@@ -41,7 +41,8 @@
         "items": {
             "set_all":  "Set daily limit (all days)…",
             "per_day":  "Per-day limits…",
-            "remove":   "Remove play-time limit"
+            "remove":   "Remove play-time limit",
+            "diag":     "Dump current config → sd:/nx_pctl_probe.txt"
         },
 
         "dialog": {
@@ -80,6 +81,7 @@
         "unlink_ok":        "Companion app unlinked.",
         "unlink_err":       "Could not unlink the companion app",
         "set_pin_ok":       "Parental control PIN updated.",
-        "set_pin_err":      "Could not update the PIN"
+        "set_pin_err":      "Could not update the PIN",
+        "diag_saved":       "Dump saved to sd:/nx_pctl_probe.txt"
     }
 }

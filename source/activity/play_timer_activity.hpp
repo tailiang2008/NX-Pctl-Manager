@@ -21,4 +21,5 @@ class PlayTimerActivity : public brls::Activity
     BRLS_BIND(brls::DetailCell, pt_set_all,   "pt_set_all");
     BRLS_BIND(brls::DetailCell, pt_per_day,   "pt_per_day");
     BRLS_BIND(brls::DetailCell, pt_remove,    "pt_remove");
+    BRLS_BIND(brls::DetailCell, pt_diag,      "pt_diag");   // PROBE-gated; see .cpp
 };

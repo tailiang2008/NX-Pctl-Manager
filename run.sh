@@ -7,6 +7,7 @@
 #   ./run.sh <switch-ip>      build, then nxlink to that IP and stream stdout back
 #   ./run.sh -a <switch-ip>   same
 #   ./run.sh clean            run `make clean` in the container
+#   PROBE=1 ./run.sh [...]    extra "Dump current config" diagnostic menu item
 #
 # Needs Docker. The devkitpro/devkita64 image is pulled automatically on first use.
 # (Build artifacts stay owned by the current user; nothing is written to /opt.)
@@ -16,8 +17,10 @@ set -e
 IMG=devkitpro/devkita64
 DIR=$(cd "$(dirname "$0")" && pwd)
 
+# Forward PROBE through to `make` in the container, so `PROBE=1 ./run.sh ...`
+# builds the diagnostic dump cell into the Play timer menu.
 dkp() {
-    docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+    docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e PROBE="${PROBE:-}" \
         -v "$DIR":/project -w /project "$@"
 }
 
@@ -26,7 +29,7 @@ if [ "$1" = "clean" ]; then
     exit 0
 fi
 
-echo ">> building (devkitpro/devkita64)..."
+echo ">> building (devkitpro/devkita64${PROBE:+, PROBE=$PROBE})..."
 dkp "$IMG" make
 
 ip=$1

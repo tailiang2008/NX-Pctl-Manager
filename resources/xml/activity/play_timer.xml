@@ -37,6 +37,11 @@
                              title="@i18n/nx_pctl/play_timer/items/per_day"/>
             <brls:DetailCell id="pt_remove"
                              title="@i18n/nx_pctl/play_timer/items/remove"/>
+            <!-- PROBE-only diagnostic dump. Hidden by default; PlayTimerActivity
+                 makes it visible + wires the click under #ifdef PCTL_PROBE. -->
+            <brls:DetailCell id="pt_diag"
+                             title="@i18n/nx_pctl/play_timer/items/diag"
+                             visibility="gone"/>
 
         </brls:Box>
 

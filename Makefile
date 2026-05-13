@@ -6,22 +6,23 @@
 TARGET := nx_pctl_manager
 BUILD  := build
 
+# Always pass PCTL_PROBE explicitly so toggling `PROBE=1` ↔ no-PROBE between
+# builds correctly updates the CMake cache (cmake is a no-op when nothing
+# changed, so re-running it every time is cheap).
 CMAKE_FLAGS := -DPLATFORM_SWITCH=ON
 ifneq ($(strip $(PROBE)),)
 	CMAKE_FLAGS += -DPCTL_PROBE=ON
+else
+	CMAKE_FLAGS += -DPCTL_PROBE=OFF
 endif
 
-.PHONY: all configure clean dist nxlink
+.PHONY: all clean dist nxlink
 
-all: configure
+all:
+	@cmake -B $(BUILD) -S . $(CMAKE_FLAGS)
 	@cmake --build $(BUILD) --target $(TARGET).nro
 	@cp $(BUILD)/$(TARGET).nro  $(TARGET).nro
 	@cp $(BUILD)/$(TARGET).nacp $(TARGET).nacp
-
-configure: $(BUILD)/CMakeCache.txt
-
-$(BUILD)/CMakeCache.txt: CMakeLists.txt
-	@cmake -B $(BUILD) -S . $(CMAKE_FLAGS)
 
 clean:
 	@echo clean ...

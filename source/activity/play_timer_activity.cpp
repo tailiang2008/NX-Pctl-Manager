@@ -1,6 +1,7 @@
 // Copyright (C) 2026 Taylor.  GPLv3-or-later (see LICENSE).
 #include "activity/play_timer_activity.hpp"
 
+#include <cstdio>
 #include <fmt/format.h>
 
 #include "action/pt_flow.hpp"
@@ -74,6 +75,21 @@ void PlayTimerActivity::onContentAvailable()
         brls::Application::pushActivity(new PlayTimerPerDayActivity());
         return true;
     });
+
+#ifdef PCTL_PROBE
+    // PROBE build: surface the read-only "Dump current config" cell — same
+    // diagnostic as v2.0.0 PROBE=1. Writes a multi-line report to
+    // sd:/nx_pctl_probe.txt (PIN digits masked) and toasts the path.
+    this->pt_diag->setVisibility(brls::Visibility::VISIBLE);
+    this->pt_diag->registerClickAction([](brls::View*) {
+        static char buf[6144];
+        pctl_play_timer_dump(buf, sizeof(buf));
+        FILE* f = std::fopen("/nx_pctl_probe.txt", "w");
+        if (f) { std::fputs(buf, f); std::fclose(f); }
+        brls::Application::notify("nx_pctl/toast/diag_saved"_i18n);
+        return true;
+    });
+#endif
 
     // Remove play-time limit — destructive, **deliberately skips** pt_flow's
     // write-gate (it IS the "turn the timer off" path; routing through 1201
