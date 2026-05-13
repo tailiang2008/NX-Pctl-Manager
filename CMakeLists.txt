@@ -64,7 +64,9 @@ endif ()
 if (PLATFORM_SWITCH)
     set(BOREALIS_RESOURCES ${BOREALIS_LIBRARY}/../resources)
     add_custom_target(${PROJECT_NAME}.nro ALL DEPENDS ${PROJECT_NAME}
-        COMMAND ${NX_NACPTOOL_EXE} --create "NX Pctl Manager" "${PROJECT_AUTHOR}"
+        # Display name shown in hbmenu (the actual repo / project name is still
+        # NX-Pctl-Manager — see set(PROJECT_NAME ...) above).
+        COMMAND ${NX_NACPTOOL_EXE} --create "Pctl Manager" "${PROJECT_AUTHOR}"
                 "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_ALTER}"
                 ${PROJECT_NAME}.nacp --titleid=${PROJECT_TITLEID}
         # Borealis built-ins first …

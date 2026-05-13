@@ -1,5 +1,5 @@
 {
-    "title":   "NX Pctl Manager",
+    "title":   "Pctl Manager",
     "actions": "Actions",
 
     "status": {
@@ -68,7 +68,7 @@
     },
 
     "init_error": {
-        "title":    "NX Pctl Manager",
+        "title":    "Pctl Manager",
         "headline": "Could not open the parental-control service.",
         "body":     "This homebrew only works on a console running CFW (Atmosphère); a stock retail console can't open the pctl service."
     },
