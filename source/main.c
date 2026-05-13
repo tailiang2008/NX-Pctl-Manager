@@ -147,9 +147,11 @@ static void pt_print_state(void)
     char tmp[16];
     printf("Play timer enabled : %s\n", g_pt.enabled ? "yes" : "no");
     printf("Limit reached today: %s\n", g_pt.restricted ? "yes ('time's up' screen may be active)" : "no");
-    if (g_pt.remaining_ns)
-        printf("Today's remaining  : ~%llu min  (raw 0x%016llX)\n",
-               (unsigned long long)(g_pt.remaining_ns / 60000000000ULL), (unsigned long long)g_pt.remaining_ns);
+    if (!g_pt.enabled)
+        printf("Today's remaining  : unknown\n");          // no active timer to report against
+    else if (g_pt.remaining_ns)
+        printf("Today's remaining  : ~%llu min\n",
+               (unsigned long long)(g_pt.remaining_ns / 60000000000ULL));
     else
         printf("Today's remaining  : 0  (often reads 0 when no game is running)\n");
 
