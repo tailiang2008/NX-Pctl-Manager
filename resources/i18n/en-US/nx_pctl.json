@@ -18,6 +18,7 @@
     },
 
     "toast": {
-        "todo": "(action not wired yet — step (b))"
+        "todo":             "(action not wired yet)",
+        "status_refreshed": "Status refreshed."
     }
 }
