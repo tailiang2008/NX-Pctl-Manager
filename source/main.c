@@ -13,11 +13,19 @@
 
 #define APP_TITLE "=== NX-Pctl-Manager ==="
 
-static PctlStatus s_status;   // refreshed on launch and after every action
+static PctlStatus s_status;        // refreshed on launch and after every action
+static PtState    g_pt;            // play-timer state cache; populated by refresh_status / pt_refresh
+static bool       s_pt_did_unlock; // set by pt_ready_to_write() when it had to turn parental
+                                   // controls off for the write; read by the writers to tweak
+                                   // their "done" message
+static size_t     s_cursor_main, s_cursor_pt, s_cursor_perday;  // remember cursor per menu
+
+static void pt_refresh(void) { pctl_play_timer_query(&g_pt); }
 
 static void refresh_status(void)
 {
     pctl_status_fetch(&s_status);
+    pt_refresh();
 }
 
 static void draw_status_panel(void)
@@ -40,14 +48,29 @@ static void draw_status_panel(void)
         printf("  Restrictions enabled : %s\n", s_status.restriction_enabled ? "yes" : "no");
     else
         printf("  Restrictions enabled : (unavailable)\n");
+
+    if (!g_pt.valid) {
+        printf("  Play timer           : (unavailable)\n");
+    } else if (!g_pt.enabled) {
+        printf("  Play timer           : disabled\n");
+    } else {
+        bool any = false, uniform = true;
+        for (int i = 0; i < 7; i++) {
+            if (g_pt.day_min[i] != PT_DAY_NOLIMIT)  any = true;
+            if (g_pt.day_min[i] != g_pt.day_min[0]) uniform = false;
+        }
+        if      (!any)              printf("  Play timer           : enabled\n");
+        else if (uniform && !g_pt.day_min[0])
+                                    printf("  Play timer           : enabled (every day blocked)\n");
+        else if (uniform)           printf("  Play timer           : enabled (%u min/day)\n", (unsigned)g_pt.day_min[0]);
+        else                        printf("  Play timer           : enabled (per-day limits)\n");
+    }
 }
 
 static void act_refresh(void)
 {
+    // Just refresh — the menu redraw shows the fresh s_status / g_pt next frame.
     refresh_status();
-    menu_clear();
-    printf("Status refreshed.\n");
-    menu_wait_back();
 }
 
 static void act_set_pin(void)
@@ -97,12 +120,6 @@ static void save_report(const char *text)
 }
 #endif
 
-static PtState g_pt;            // cached play-timer state, refreshed on entry and after each action
-static bool    s_pt_did_unlock; // set by pt_ready_to_write() when it had to turn parental controls off
-                                // for the write; read by the writers to tweak their "done" message
-
-static void pt_refresh(void) { pctl_play_timer_query(&g_pt); }
-
 // Tacked onto a successful-write message when the write went through pt_ready_to_write()'s
 // "turn parental controls off temporarily" path; no-op otherwise.
 static void pt_did_unlock_notice(void)
@@ -136,7 +153,7 @@ static void pt_print_state(void)
     else
         printf("Today's remaining  : 0  (often reads 0 when no game is running)\n");
 
-    if (!g_pt.valid) { printf("Configured limits  : (could not read)\n"); return; }
+    if (!g_pt.valid) { printf("Configured limit   : (could not read)\n"); return; }
 
     bool uniform = true, anyset = false;
     for (int i = 0; i < 7; i++) {
@@ -147,7 +164,7 @@ static void pt_print_state(void)
     else if (uniform) printf("Configured limit   : %s (all days)\n", pt_minstr(g_pt.day_min[0], tmp, sizeof tmp));
     else {
         static const char *const ab[7] = { "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" };
-        printf("Configured limits  :");
+        printf("Configured limit   :");
         for (int i = 0; i < 7; i++) {
             if      (g_pt.day_min[i] == PT_DAY_NOLIMIT) printf(" %s-", ab[i]);
             else if (g_pt.day_min[i] == 0)              printf(" %sX", ab[i]);
@@ -215,8 +232,8 @@ static void pt_off(void)   // turn the play timer off entirely
 {
     Result rc = pctl_play_timer_clear();
     menu_clear();
-    if (R_SUCCEEDED(rc)) printf("Play timer turned off (no limits, no blocked days).\n");
-    else                 printf("Failed (0x%08X).\n", (unsigned int)rc);
+    if (R_SUCCEEDED(rc)) printf("Play timer turned off.\n");
+    else                 printf("Could not turn off the play timer (error 0x%08X).\n", (unsigned int)rc);
     pt_refresh();
     menu_wait_back();
 }
@@ -384,7 +401,8 @@ static void pt_per_day(void)
     for (int i = 0; i < 7; i++) g_pt_pending[i] = g_pt.day_min[i];   // seed staged config from the live one
     pt_rebuild_day_labels();
     menu_run("=== Per-day play-time limits ===", pt_draw_perday_header,
-             g_pt_perday_items, 8, menu_current_pad());
+             g_pt_perday_items, 8, menu_current_pad(),
+             "select", "back", &s_cursor_perday);
 }
 
 static const MenuItem g_pt_items[] = {
@@ -400,8 +418,12 @@ static void act_play_timer(void)
 {
     pt_refresh();
     menu_run("=== Play timer ===", pt_draw_header,
-             g_pt_items, sizeof(g_pt_items) / sizeof(g_pt_items[0]), menu_current_pad());
+             g_pt_items, sizeof(g_pt_items) / sizeof(g_pt_items[0]),
+             menu_current_pad(), NULL, "back", &s_cursor_pt);
+#ifdef PCTL_PROBE
     pctl_ops_reinit();   // a diagnostic dump may have closed the session; restore it
+#endif
+    refresh_status();    // pick up anything the sub-menu changed (e.g. 1201 cleared the restriction)
 }
 
 static const MenuItem g_items[] = {
@@ -448,7 +470,8 @@ int main(int argc, char *argv[])
     }
 
     refresh_status();
-    menu_run(APP_TITLE, draw_status_panel, g_items, sizeof(g_items) / sizeof(g_items[0]), &pad);
+    menu_run(APP_TITLE, draw_status_panel, g_items, sizeof(g_items) / sizeof(g_items[0]),
+             &pad, NULL, NULL, &s_cursor_main);
 
     pctl_ops_exit();
     consoleExit(NULL);

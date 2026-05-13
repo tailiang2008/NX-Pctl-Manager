@@ -61,13 +61,19 @@ void menu_wait_back(void)
 }
 
 void menu_run(const char *title, menu_draw_fn draw_header,
-              const MenuItem *items, size_t count, PadState *pad)
+              const MenuItem *items, size_t count, PadState *pad,
+              const char *action_label, const char *back_label,
+              size_t *cursor_inout)
 {
     if (count == 0) return;
     s_pad = pad;
     padUpdate(pad);          // discard whatever was held when we entered (e.g. the launch press)
 
-    size_t cursor = 0;
+    size_t cursor = cursor_inout ? *cursor_inout : 0;
+    if (cursor >= count) cursor = 0;             // count may have shrunk between re-entries
+    const char *a = action_label ? action_label : "confirm";
+    const char *b = back_label   ? back_label   : "exit";
+
     while (appletMainLoop()) {
         padUpdate(pad);
         u64 k = padGetButtonsDown(pad);
@@ -87,7 +93,9 @@ void menu_run(const char *title, menu_draw_fn draw_header,
         printf("\n");
         for (size_t i = 0; i < count; i++)
             printf("  %s %s\n", (i == cursor) ? ">" : " ", items[i].label);
-        printf("\nUp/Down: select   A: confirm   B: exit\n");
+        printf("\nUp/Down: move   A: %s   B: %s\n", a, b);
         consoleUpdate(NULL);
     }
+
+    if (cursor_inout) *cursor_inout = cursor;
 }

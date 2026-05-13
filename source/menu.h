@@ -18,8 +18,17 @@ typedef struct {
 // Runs the menu loop until the user presses B. `pad` must already be configured
 // (padConfigureInput) and initialized (padInitializeDefault). `title` and
 // `draw_header` may be NULL.
+//
+// `action_label` / `back_label`: the verbs in the bottom hint
+//   "A: <action>   B: <back>". Pass NULL for the defaults ("confirm" / "exit");
+//   sub-menus typically pass back_label="back".
+// `cursor_inout`: if non-NULL, the cursor starts at *cursor_inout and the
+//   final position is written back when the user leaves — keep a static at each
+//   call site to remember the spot across re-entries.
 void menu_run(const char *title, menu_draw_fn draw_header,
-              const MenuItem *items, size_t count, PadState *pad);
+              const MenuItem *items, size_t count, PadState *pad,
+              const char *action_label, const char *back_label,
+              size_t *cursor_inout);
 
 // These may be called from a MenuItem action — a menu must be running.
 bool menu_confirm(const char *prompt);   // A = confirm, B = cancel
