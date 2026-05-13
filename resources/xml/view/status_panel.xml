@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    StatusPanel — 4 rows shown above the main menu.
+    Title-value pairs; the *_value labels are filled in at runtime from
+    pctl_status_fetch / pctl_play_timer_query (see source/view/status_panel.cpp).
+-->
+
+<brls:Box
+    width="auto"
+    height="auto"
+    axis="column"
+    alignItems="stretch"
+    marginBottom="24">
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/status/safety_level" grow="1.0"/>
+        <brls:Label id="safety_value" text="—"/>
+    </brls:Box>
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/status/pin" grow="1.0"/>
+        <brls:Label id="pin_value" text="—"/>
+    </brls:Box>
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/status/restrictions" grow="1.0"/>
+        <brls:Label id="restrictions_value" text="—"/>
+    </brls:Box>
+
+    <brls:Box axis="row" alignItems="center" marginBottom="6">
+        <brls:Label text="@i18n/nx_pctl/status/play_timer" grow="1.0"/>
+        <brls:Label id="play_timer_value" text="—"/>
+    </brls:Box>
+
+</brls:Box>

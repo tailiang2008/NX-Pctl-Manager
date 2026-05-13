@@ -1,4 +1,23 @@
 {
-    "title": "NX Pctl Manager",
-    "hello": "Hello, borealis!"
+    "title":   "NX Pctl Manager",
+    "actions": "Actions",
+
+    "status": {
+        "safety_level": "Safety level",
+        "pin":          "PIN",
+        "restrictions": "Restrictions enabled",
+        "play_timer":   "Play timer"
+    },
+
+    "items": {
+        "refresh":    "Refresh status",
+        "play_timer": "Play timer (daily limit)",
+        "set_pin":    "Set / change parental control PIN",
+        "delete_pc":  "Delete all parental controls",
+        "unlink":     "Unlink companion app"
+    },
+
+    "toast": {
+        "todo": "(action not wired yet — step (b))"
+    }
 }

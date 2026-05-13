@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Step (a) hello-world layout. Replaced in step (b) with the real main menu
-    (status panel + 5 ListItems). For now: title bar + a centred greeting.
+    Main menu: 4-line StatusPanel above an "Actions" section with the 5 cells
+    that replace the old text-console menu items. Wired in MainActivity.cpp.
 -->
 
 <brls:AppletFrame
     title="@i18n/nx_pctl/title"
     iconInterpolation="linear">
 
-    <brls:Box
+    <brls:ScrollingFrame
         width="auto"
         height="auto"
         axis="column"
-        justifyContent="center"
-        alignItems="center"
+        alignItems="stretch"
+        scrollingBehavior="centered"
         grow="1.0">
 
-        <brls:Label
-            text="@i18n/nx_pctl/hello"
-            fontSize="32" />
+        <brls:Box
+            width="auto"
+            height="auto"
+            axis="column"
+            alignItems="stretch"
+            paddingTop="@style/brls/sidebar/padding_top"
+            paddingRight="@style/brls/sidebar/padding_right"
+            paddingBottom="@style/brls/sidebar/padding_bottom"
+            paddingLeft="@style/brls/sidebar/padding_left">
 
-    </brls:Box>
+            <StatusPanel id="status_panel"/>
+
+            <brls:Header
+                title="@i18n/nx_pctl/actions"
+                marginBottom="8"/>
+
+            <brls:DetailCell id="item_refresh"    title="@i18n/nx_pctl/items/refresh"/>
+            <brls:DetailCell id="item_play_timer" title="@i18n/nx_pctl/items/play_timer"/>
+            <brls:DetailCell id="item_set_pin"    title="@i18n/nx_pctl/items/set_pin"/>
+            <brls:DetailCell id="item_delete_pc"  title="@i18n/nx_pctl/items/delete_pc"/>
+            <brls:DetailCell id="item_unlink"     title="@i18n/nx_pctl/items/unlink"/>
+
+        </brls:Box>
+
+    </brls:ScrollingFrame>
 
 </brls:AppletFrame>

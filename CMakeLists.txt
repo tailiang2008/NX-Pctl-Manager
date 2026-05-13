@@ -30,9 +30,9 @@ add_subdirectory(${BOREALIS_LIBRARY} ${CMAKE_BINARY_DIR}/borealis_library)
 find_package(Threads REQUIRED)
 list(APPEND APP_PLATFORM_LIB ${CMAKE_THREAD_LIBS_INIT})
 
-# Our C++ sources. Step (a) only wires main.cpp + the MainActivity stub;
-# pctl_ops.{h,c} comes back into the build at step (b).
-file(GLOB_RECURSE NX_PCTL_SRC source/*.cpp)
+# Our sources — both C++ (UI / glue) and C (pctl_ops.c service layer, unchanged
+# from the v2.0.0 text-console build).
+file(GLOB_RECURSE NX_PCTL_SRC source/*.cpp source/*.c)
 
 if (PLATFORM_SWITCH)
     # libnx applet/main wrapper from borealis (handles HOME / nvServices / etc.).
