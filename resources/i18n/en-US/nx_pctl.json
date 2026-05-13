@@ -17,8 +17,23 @@
         "unlink":     "Unlink companion app"
     },
 
+    "dialog": {
+        "delete_pc": {
+            "body":    "Delete all parental controls?\n\nThis wipes the PIN and every restriction, and cannot be undone.",
+            "confirm": "Delete"
+        },
+        "unlink": {
+            "body":    "Unlink the companion app (Nintendo Switch Parental Controls) from this console?",
+            "confirm": "Unlink"
+        }
+    },
+
     "toast": {
         "todo":             "(action not wired yet)",
-        "status_refreshed": "Status refreshed."
+        "status_refreshed": "Status refreshed.",
+        "delete_pc_ok":     "Parental controls deleted.",
+        "delete_pc_err":    "Could not delete parental controls",
+        "unlink_ok":        "Companion app unlinked.",
+        "unlink_err":       "Could not unlink the companion app"
     }
 }
