@@ -3,6 +3,7 @@
 
 #include <fmt/format.h>
 
+#include "activity/play_timer_activity.hpp"
 #include "app.hpp"
 #include "util/pctl_ops_c.hpp"
 
@@ -68,13 +69,17 @@ void MainActivity::onContentAvailable()
         return true;
     });
 
-    // The two remaining cells still toast a placeholder until (e) / (f).
-    auto placeholder = [](brls::View*) {
+    // Play timer (daily limit) — step (e): push the sub-Activity.
+    this->item_play_timer->registerClickAction([](brls::View*) {
+        brls::Application::pushActivity(new PlayTimerActivity());
+        return true;
+    });
+
+    // Set / change PIN — wired in step (f).
+    this->item_set_pin->registerClickAction([](brls::View*) {
         brls::Application::notify("nx_pctl/toast/todo"_i18n);
         return true;
-    };
-    this->item_play_timer->registerClickAction(placeholder);
-    this->item_set_pin   ->registerClickAction(placeholder);
+    });
 
     // First read of the status panel — onResume runs it again on every entry,
     // but a freshly created Activity doesn't get an onResume call.

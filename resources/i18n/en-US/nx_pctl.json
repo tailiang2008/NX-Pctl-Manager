@@ -28,6 +28,44 @@
         }
     },
 
+    "play_timer": {
+        "title": "Play timer",
+
+        "state": {
+            "enabled":    "Play timer enabled",
+            "restricted": "Limit reached today",
+            "remaining":  "Today's remaining",
+            "configured": "Configured limit"
+        },
+
+        "items": {
+            "set_all":  "Set daily limit (all days)…",
+            "per_day":  "Per-day limits…",
+            "remove":   "Remove play-time limit"
+        },
+
+        "dialog": {
+            "remove": {
+                "body":    "Remove the play-time limit (all days)?",
+                "confirm": "Remove"
+            }
+        },
+
+        "gate": {
+            "body":    "The play timer is currently active.\n\nWriting a new limit needs parental controls to be temporarily turned off first.\n\nTurn parental controls off temporarily and write now?",
+            "confirm": "Turn off & write"
+        },
+
+        "did_unlock_notice": "Parental controls are temporarily off.\n\nReturn to the main menu; the new limit takes effect once parental controls are active again.",
+
+        "perday": {
+            "title":         "Per-day play-time limits",
+            "section_days":  "Per-day limits (A to edit; (*) marks staged changes)",
+            "section_save":  "Save",
+            "save":          "Save per-day limits"
+        }
+    },
+
     "toast": {
         "todo":             "(action not wired yet)",
         "status_refreshed": "Status refreshed.",

@@ -8,6 +8,7 @@
 
 #include "app.hpp"
 #include "activity/main_activity.hpp"
+#include "view/pt_state_header.hpp"
 #include "view/status_panel.hpp"
 
 using namespace brls::literals;   // enables the "key"_i18n suffix
@@ -30,7 +31,8 @@ int main(int argc, char* argv[])
     brls::Application::setGlobalQuit(false);
 
     // Register custom views referenced from XML by their unprefixed tag name.
-    brls::Application::registerXMLView("StatusPanel", StatusPanel::create);
+    brls::Application::registerXMLView("StatusPanel",   StatusPanel::create);
+    brls::Application::registerXMLView("PtStateHeader", PtStateHeader::create);
 
     // Open the pctl service. On a non-CFW console this returns an error; we
     // still push MainActivity, but the status panel will read "(unavailable)"
