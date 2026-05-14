@@ -58,6 +58,7 @@ dkms.conf
 # Local project notes (not for the public repo)
 CLAUDE.md
 PROGRESS.md
+HB_APPSTORE_SUBMISSION.md
 
 # Project ignores
 /build
